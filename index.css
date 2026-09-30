@@ -1,0 +1,35 @@
+:root {
+  --desktop-min-width: 1100px;
+  --vanilla: #D7BDA6;
+  --almond: #B7957F;
+  --caramel: #AB7743;
+  --mocca: #84593D;
+  --coffee: #6D3914;
+  --espresso: #4C2B08;
+  --cream: var(--vanilla);
+  --wine: var(--espresso);
+  --rose: var(--caramel);
+  --muted: var(--mocca);
+  --sans: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  font: 16px/1.45 var(--sans);
+  color: var(--espresso);
+  background: var(--cream);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-width: var(--desktop-min-width);
+  overflow-x: auto;
+}
+
+#root {
+  min-width: var(--desktop-min-width);
+  min-height: 100svh;
+}
+
+html {
+  overflow-x: auto;
+}
