@@ -1,0 +1,82 @@
+:is(#partyView, #debateView) .party-prepared-answer {
+  display: flex;
+  align-items: flex-end;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 100%;
+  gap: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+:is(#partyView, #debateView) .party-prepared-answer > .party-message-avatar {
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 2px;
+  background: transparent;
+  object-fit: contain;
+}
+
+#debateView .party-prepared-answer { --party-answer-max-width: 75%; }
+
+:is(#partyView, #debateView) .party-prepared-answer .party-answer-content {
+  position: relative;
+  flex: 0 1 auto;
+  width: fit-content;
+  max-width: var(--party-answer-max-width, min(600px, calc(100% - 50px)));
+  min-width: 0;
+  padding: 20px 52px 20px 22px;
+  border: 0;
+  border-radius: 22px;
+  background: var(--party-chat-accent, #a91e40);
+  color: #fff;
+  font: 17px/1.65 "DM Sans", sans-serif;
+  text-align: left;
+  word-spacing: normal;
+  overflow-wrap: break-word;
+}
+
+:is(#partyView, #debateView) .party-answer-name { display: block; margin-bottom: 8px; color: inherit; font-size: 14px; line-height: 1.4; }
+
+:is(#partyView, #debateView) .party-prepared-answer .party-answer-content p {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  white-space: normal;
+}
+
+:is(#partyView, #debateView) .party-prepared-answer .party-answer-toggle {
+  display: block;
+  width: fit-content;
+  margin-top: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: inherit;
+  font: 600 15px/1.4 "DM Sans", sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+:is(#partyView, #debateView) .party-prepared-answer .party-answer-toggle:hover { text-decoration-thickness: 2px; }
+:is(#partyView, #debateView) .party-answer-details { display: grid; gap: 14px; margin-top: 18px; }
+:is(#partyView, #debateView) .party-answer-details[hidden] { display: none; }
+:is(#partyView, #debateView) .party-answer-content > .debate-like-button { position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; margin: 0; color: inherit; font-size: 23px; }
+:is(#partyView, #debateView) .party-answer-content > .debate-like-button:hover { background: rgba(255,255,255,.15); }
+:is(#partyView, #debateView) .party-answer-sources { margin-top: 18px; font-size: 14px; line-height: 1.6; }
+:is(#partyView, #debateView) .party-answer-sources h3 { display: inline; margin: 0 4px 0 0; color: inherit; font: 700 14px/1.6 "DM Sans", sans-serif; }
+:is(#partyView, #debateView) .party-answer-sources ul { display: inline; margin: 0; padding: 0; list-style: none; }
+:is(#partyView, #debateView) .party-answer-sources li { display: inline; }
+:is(#partyView, #debateView) .party-answer-sources li + li::before { content: "; "; }
+:is(#partyView, #debateView) .party-answer-sources a { color: inherit; font-size: inherit; line-height: inherit; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+:is(#partyView.is-private, #debateView) .party-answer-content :is(button,a):focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }

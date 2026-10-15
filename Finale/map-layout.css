@@ -1,0 +1,85 @@
+/* Min karta uses the available laptop viewport; the two lists scroll independently. */
+#siteShell.mindmap-mode {
+  height: 100dvh;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+#siteShell.mindmap-mode > .app-main { height: 100%; min-height: 0; }
+#siteShell.mindmap-mode #mindmapPage { height: 100%; min-height: 0; padding: 14px 28px; }
+
+#mindmapPage .my-map-workspace {
+  --map-panel-width: 380px;
+  --map-panel-gap: 16px;
+  --map-controls-offset: 0px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  height: 100%;
+  min-height: 0;
+}
+
+#mindmapPage .my-map-header { gap: 4px; }
+#mindmapPage .my-map-brand { font-size: 20px; line-height: 1.25; }
+#mindmapPage .my-map-header h1 { font-size: 13px; line-height: 1.2; }
+#mindmapPage .my-map-switch button { min-height: 26px; }
+#mindmapPage #myMapPersonalView { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 8px; min-height: 0; }
+#mindmapPage .my-map-toolbar { min-height: 38px; margin: 0; padding: 0; }
+#mindmapPage .my-map-demo-label { flex: 1; min-width: 0; font-size: 14px; line-height: 1.35; }
+#mindmapPage .my-map-toolbar-actions { gap: 10px; }
+#mindmapPage .my-map-add-toggle { min-height: 36px; padding: 5px 12px; font-size: 14px; }
+#mindmapPage .my-map-saved-icon { width: 28px; height: 26px; flex-basis: 28px; }
+
+#mindmapPage #myMapPersonalLayout { min-height: 0; grid-template-rows: minmax(0, 1fr); align-items: stretch; }
+#siteShell.mindmap-mode #myMapPersonalLayout.has-editor { grid-template-columns: minmax(0, 1fr) var(--map-panel-width); gap: var(--map-panel-gap); }
+#siteShell.mindmap-mode #myMapPersonalLayout.has-saved { --map-panel-width: 460px; }
+#mindmapPage .my-map-workspace:has(#myMapPersonalView:not([hidden]) #myMapPersonalLayout.has-editor) { --map-controls-offset: calc(var(--map-panel-width) + var(--map-panel-gap)); }
+#mindmapPage .my-map-workspace:has(#myMapPersonalLayout.has-saved) { --map-panel-width: 460px; }
+
+/* Leave an actual control row below the SVG, beside rather than over the editor. */
+#mindmapPage #myMapPersonalLayout > .my-map-stage { height: calc(100% - 48px); min-height: 0; }
+#mindmapPage .my-map-controls { position: absolute; right: var(--map-controls-offset); bottom: 0; margin: 0; }
+
+#mindmapPage #myMapEditor {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  gap: 8px;
+  height: 100%;
+  min-height: 0;
+  padding: 14px;
+  font-size: 14px;
+}
+
+#mindmapPage #myMapEditor.is-ranking { grid-template-rows: auto auto minmax(0, 1fr); }
+
+#mindmapPage .my-map-editor-header { min-height: 30px; gap: 8px; }
+#mindmapPage .my-map-editor-header h2 { font-size: 20px; line-height: 1.2; }
+#mindmapPage .my-map-editor-close { flex: 0 0 28px; width: 28px; height: 28px; }
+#mindmapPage .my-map-subject-picker { min-height: 0; gap: 6px; }
+#mindmapPage .my-map-subject-picker h3, #mindmapPage .my-map-ranking h3 { font-size: 16px; line-height: 1.3; }
+#mindmapPage .my-map-subject-choices { min-height: 0; gap: 6px; overflow-y: auto; }
+#mindmapPage .my-map-subject-choices button { min-height: 38px; padding: 7px 6px; font-size: 14px; line-height: 1.3; }
+#mindmapPage #myMapCustomForm { gap: 6px; }
+#mindmapPage #myMapCustomForm input, #mindmapPage #myMapCustomForm button { height: 38px; min-height: 38px; padding: 6px 9px; font-size: 14px; }
+#mindmapPage #myMapEditorMessage { min-height: 1.35em; margin: 0; font-size: 14px; line-height: 1.35; }
+#mindmapPage .my-map-ranking { min-height: 0; padding: 8px; }
+#mindmapPage .my-map-ranking header p { margin: 4px 0 0; font-size: 14px; line-height: 1.3; }
+#mindmapPage #myMapOpenRanking { min-height: 34px; margin: 0; padding: 6px 12px; font-size: 14px; line-height: 1.3; }
+#mindmapPage .my-map-ranking-list { min-height: 0; overflow-y: auto; }
+#mindmapPage .my-map-ranking-item { grid-template-columns: 20px 20px minmax(0, 1fr) auto; gap: 4px; min-height: 40px; }
+#mindmapPage .my-map-rank-number, #mindmapPage .my-map-rank-name { font-size: 14px; }
+#mindmapPage .my-map-rank-actions .my-map-rank-place { padding: 4px 6px; font-size: 14px; }
+#mindmapPage .my-map-unranked-heading { padding: 8px 0 6px; font-size: 14px; }
+
+/* Saved chats keep the same viewport boundary and their own internal scrolling. */
+#mindmapPage #myMapSavedPanel { height: 100%; min-height: 0; max-height: none; align-self: stretch; }
+#mindmapPage .my-map-saved-scroll { flex: 1; min-height: 0; }
+
+/* The other map view keeps both maps side by side within the same workspace. */
+#mindmapPage #myMapCompareView { display: grid; grid-template-rows: auto auto auto auto minmax(0, 1fr); min-height: 0; padding-bottom: 48px; }
+#mindmapPage .my-map-compare-question { margin: 4px 0 8px; }
+#mindmapPage .my-map-comparison-summary { margin: 8px auto; }
+#mindmapPage .my-map-legend { margin: 6px 0 10px; }
+#mindmapPage .my-map-compare-grid { min-height: 0; }
+#mindmapPage .my-map-compare-card { display: grid; grid-template-rows: auto minmax(0, 1fr); min-height: 0; }
+#mindmapPage .my-map-compare-card .my-map-stage { height: 100%; min-height: 0; }

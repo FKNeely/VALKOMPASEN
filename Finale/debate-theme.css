@@ -1,0 +1,86 @@
+/* Debatt shares Samtal's palette without changing the other views. */
+#siteShell:has(#debateView:not([hidden])) {
+  --paper: #fff;
+  --paper-deep: #f3e9df;
+  --ink: #25231f;
+  --ink-dark: #302c27;
+  --muted: #77716b;
+  --line: #d8c8bb;
+  --accent: #875f46;
+  --rail: #faf4eb;
+  --shadow: rgba(65,45,32,.14);
+}
+
+#debateView {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 24px;
+  height: calc(100dvh - 64px);
+  min-height: 0;
+  padding: 32px clamp(28px, 3vw, 48px) 24px;
+  background: #fff;
+  font-family: "DM Sans", sans-serif;
+}
+
+#debateView .debate-header { width: 100%; margin: 0 auto; padding: 0; border: 0; }
+#debateView .debate-header h1 { color: #302c27; font-size: clamp(38px, 3.8vw, 52px); line-height: 1.16; }
+#debateView .debate-header > p:last-child { font-size: 16px; line-height: 1.5; }
+#debateView .debate-layout { width: 100%; min-height: 0; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: stretch; }
+
+#debateView .debate-chat {
+  min-height: 0;
+  padding: 20px;
+  border: 1px solid #e5d7ca;
+  border-radius: 20px;
+  background: #fffdf9;
+  box-shadow: 0 5px 20px rgba(65,45,32,.04);
+}
+
+#debateView .debate-log { flex: 1; min-height: 0; max-height: none; gap: 16px; padding: 4px 6px 18px 0; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #ae8770 transparent; }
+#debateView .debate-log > article { flex-shrink: 0; }
+#debateView .debate-empty { max-width: 340px; font-size: 16px; line-height: 1.6; }
+#debateView .debate-user-message { padding: 14px 18px; border-color: #d8c8bb; border-radius: 18px 18px 5px 18px; background: #f4e8d9; font-size: 16px; line-height: 1.65; overflow-wrap: break-word; }
+#debateView .debate-user-message p { margin: 0; }
+#debateView .debate-user-message .debate-question-interpretation { margin: 8px 0 0; color: #79513d; font-size: 14px; line-height: 1.5; }
+#debateView .debate-like-button { width: 34px; height: 30px; border-radius: 8px; color: #875f46; font-size: 22px; }
+#debateView .party-answer-content > .debate-like-button { color: inherit; }
+
+/* Retain the rounded field, its dimensions and its plus button on the right. */
+#debateView .debate-form { flex-shrink: 0; border-color: #d8c8bb; background: #fff8f0; }
+#debateView .debate-form button { color: #fffaf5; background: #c39c84; }
+#debateView .debate-form button:hover { background: #aa8068; }
+#debateView .debate-feedback { font-size: 14px; line-height: 1.4; }
+#debateView .debate-feedback:empty { min-height: 0; margin: 0; }
+#debateView .debate-disclaimer { margin-top: 12px; font-size: 13px; line-height: 1.45; }
+
+#debateView .debate-party-box {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  align-self: stretch;
+  min-height: 0;
+  padding: 18px;
+  border: 1px solid #d8c8bb;
+  border-radius: 20px;
+  background: #faf4eb;
+}
+
+#debateView .debate-party-box h2 { color: #79513d; font-size: 20px; }
+#debateView .debate-party-box > p:not(.debate-party-count) { font-size: 14px; line-height: 1.5; }
+#debateView .debate-party-list { min-height: 0; gap: 6px; align-content: start; padding: 2px 3px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #ae8770 transparent; }
+#debateView .debate-party-option { grid-template-columns: 18px 38px minmax(0, 1fr); gap: 10px; min-height: 50px; padding: 8px; border: 1px solid transparent; border-radius: 12px; background: #fff; font-size: 15px; line-height: 1.35; }
+#debateView .debate-party-option:hover { border-color: #d8c8bb; background: #fff8f0; }
+#debateView .debate-party-option:has(input:checked) { border-color: #b8947c; background: #ead9c8; }
+#debateView .debate-party-option:has(input:focus-visible) { outline: 2px solid #875f46; outline-offset: 2px; }
+#debateView .debate-party-option input { width: 18px; height: 18px; }
+#debateView .debate-party-option img { width: 38px; height: 34px; object-fit: contain; }
+#debateView .debate-party-option span { overflow-wrap: normal; }
+#debateView .debate-party-count { font-family: "DM Sans", sans-serif; font-size: 14px; line-height: 1.4; }
+
+@media (max-height: 800px) {
+  #debateView { gap: 20px; padding-top: 24px; padding-bottom: 20px; }
+  #debateView .debate-header h1 { font-size: 42px; }
+  #debateView .debate-header > p:last-child { margin-top: 8px; font-size: 15px; }
+  #debateView .debate-party-list { gap: 4px; }
+  #debateView .debate-party-option { min-height: 44px; padding-top: 5px; padding-bottom: 5px; }
+  #debateView .debate-party-option img { height: 32px; }
+}

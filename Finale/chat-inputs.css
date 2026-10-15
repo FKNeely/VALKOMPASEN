@@ -1,0 +1,64 @@
+/* Valstugor composer. Samtal and Debatt keep their original styles in styles.css. */
+#siteShell #partyChatForm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 2px 8px;
+  border: 1.5px solid var(--party-chat-accent, #a91e40);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 18px -7px rgba(65, 45, 32, .28);
+}
+
+#siteShell #partyChatForm:focus-within {
+  border-color: var(--party-chat-accent, #a91e40);
+  outline: 2px solid var(--party-chat-accent, #a91e40);
+  outline-offset: 3px;
+}
+
+#siteShell #partyChatForm input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: #302c27;
+  font-family: "DM Sans", sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+#siteShell #partyChatForm input::placeholder {
+  color: #77716b;
+  opacity: 1;
+}
+
+#siteShell #partyChatForm button[type="submit"] {
+  order: -1;
+  display: grid;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--party-chat-accent, #a91e40);
+  font-family: "DM Sans", sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#siteShell #partyChatForm button[type="submit"]:hover {
+  background: color-mix(in srgb, var(--party-chat-accent, #a91e40) 8%, white);
+}
+
+#siteShell #partyChatForm button[type="submit"]:focus-visible {
+  outline: 2px solid var(--party-chat-accent, #a91e40);
+  outline-offset: 1px;
+}

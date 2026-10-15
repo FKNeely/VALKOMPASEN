@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valkompanjonen | Fråga din valkompanjon</title>
+    <meta
+      name="description"
+      content="Valkompanjonen hjälper dig att förstå politiska frågor, jämföra perspektiv och fatta informerade beslut."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=20261015-party-shortcuts-right-77" />
+    <link rel="stylesheet" href="navigation.css?v=20261015-no-header-31" />
+    <link rel="stylesheet" href="map-layout.css?v=20261015-ranking-entry-72" />
+    <link rel="stylesheet" href="chat-inputs.css?v=20261015-party-chat-69" />
+    <link rel="stylesheet" href="party-answers.css?v=20261015-shared-bubbles-75" />
+    <link rel="stylesheet" href="debate-theme.css?v=20261015-shared-bubbles-75" />
+  </head>
+  <body>
+    <div id="siteShell" class="site-shell home-mode">
+
+
+      <aside id="siteMenu" class="site-menu" aria-label="Sidonavigation">
+        <div class="sidebar-heading">
+          <span class="sidebar-brand">Valkompanjonen</span>
+          <span class="sidebar-caption">MENY</span>
+        </div>
+        <nav aria-label="Huvudmeny">
+          <a class="sidebar-link is-active" data-view="home" href="#samtal" aria-label="Samtal" title="Samtal"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Samtal</span></a>
+          <button id="mindmapButton" class="sidebar-link" type="button" data-view="mindmap" aria-label="Din politiska karta" title="Din politiska karta"><span class="nav-icon" aria-hidden="true">✦</span><span class="nav-label">Politisk karta</span></button>
+          <button id="partyViewButton" class="sidebar-link" type="button" data-view="party" aria-label="Valstugor" title="Valstugor"><span class="nav-icon" aria-hidden="true">◉</span><span class="nav-label">Valstugor</span></button>
+          <button id="debateViewButton" class="sidebar-link" type="button" data-view="debate" aria-label="Debatt" title="Debatt"><span class="nav-icon" aria-hidden="true">◈</span><span class="nav-label">Debatt</span></button>
+          <button id="sourcesButton" class="sidebar-link" type="button" aria-label="Källor" title="Källor"><span class="nav-icon" aria-hidden="true">↗</span><span class="nav-label">Källor</span></button>
+          <a class="sidebar-link" href="#how-it-works" aria-label="Så fungerar det" title="Så fungerar det"><span class="nav-icon" aria-hidden="true">i</span><span class="nav-label">Så fungerar det</span></a>
+        </nav>
+        <p class="sidebar-note">Nyfikenhet först.<br />Partipolitik sen.</p>
+      </aside>
+      <button id="sidebarScrim" class="sidebar-scrim" type="button" aria-label="Stäng navigation" hidden></button>
+
+      <main id="top" class="app-main">
+        <div id="homeView" class="home-view">
+        <section id="ask" class="ask-section">
+          <div class="hero-content">
+            <p class="kicker">Din politiska valkompanjon</p>
+            <h1>Ställ en fråga till din <em>valkompanjon</em></h1>
+            <button id="newConversationButton" class="new-conversation-button" type="button" hidden><span aria-hidden="true">+</span> Ny konversation</button>
+            <p class="intro">
+              Ställ en fråga, börja en diskussion eller fråga om din personliga politiska karta.
+            </p>
+
+            <div class="question-composer">
+              <div class="suggestions" aria-label="Förslag på frågor">
+                <button type="button" data-question="vilka frågor kan jag ställa">Vilka frågor kan jag ställa?</button>
+              </div>
+              <form id="questionForm" class="question-form">
+                <label class="sr-only" for="questionInput">Skriv din politiska fråga</label>
+                <input
+                  id="questionInput"
+                  name="question"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="Vad vill du veta mer om?"
+                />
+                <button type="submit" aria-label="Skicka fråga">+</button>
+              </form>
+            </div>
+            <p id="questionMessage" class="question-message" aria-live="polite"></p>
+
+            <div id="conversation" class="conversation" aria-live="polite" aria-label="Samtal">
+              <div class="conversation-empty">Din dialog visas här.</div>
+            </div>
+          </div>
+
+          <div class="scroll-cue" aria-hidden="true"><span>↓</span> utforska</div>
+        </section>
+
+        <aside id="compare" class="party-rail" data-view="pie" aria-label="Partijämförelse">
+          <button id="railToggle" class="rail-toggle" type="button" aria-expanded="true" aria-controls="railContent">
+            <span class="rail-toggle-label">Dölj jämförelse</span><span class="rail-toggle-icon" aria-hidden="true">›</span>
+          </button>
+          <div id="railContent" class="rail-content">
+            <div class="rail-heading">
+              <p>Överensstämmelser</p>
+              <span>din karta · exempeldata</span>
+            </div>
+            <div class="view-switcher" role="group" aria-label="Visning av överensstämmelser">
+              <button type="button" data-view="percent" aria-pressed="false" aria-label="Visa procent">%</button>
+              <button type="button" data-view="pie" aria-pressed="true" aria-label="Visa cirkeldiagram">◉</button>
+              <button type="button" data-view="bars" aria-pressed="false" aria-label="Visa stapeldiagram">▥</button>
+            </div>
+            <div id="partyList" class="party-list">
+              <button class="party-row" type="button" data-party="MP" data-match="50" aria-label="Miljöpartiet, 50 procent">
+                <img class="agreement-party-logo" src="assets/parties/miljöpartiet.png" alt="" /><span class="party-name">Miljöpartiet</span>
+                <span class="match-percent">50%</span><span class="match-pie" aria-hidden="true"><i>50%</i></span><span class="match-bar" aria-hidden="true"><i></i></span>
+              </button>
+              <button class="party-row" type="button" data-party="S" data-match="50" aria-label="Socialdemokraterna, 50 procent">
+                <img class="agreement-party-logo" src="assets/parties/socialdemokraterna.png" alt="" /><span class="party-name">Socialdemokraterna</span>
+                <span class="match-percent">50%</span><span class="match-pie" aria-hidden="true"><i>50%</i></span><span class="match-bar" aria-hidden="true"><i></i></span>
+              </button>
+              <button class="party-row" type="button" data-party="C" data-match="50" aria-label="Centerpartiet, 50 procent">
+                <img class="agreement-party-logo" src="assets/parties/centerpartiet.png" alt="" /><span class="party-name">Centerpartiet</span>
+                <span class="match-percent">50%</span><span class="match-pie" aria-hidden="true"><i>50%</i></span><span class="match-bar" aria-hidden="true"><i></i></span>
+              </button>
+              <button class="party-row" type="button" data-party="V" data-match="50" aria-label="Vänsterpartiet, 50 procent">
+                <img class="agreement-party-logo" src="assets/parties/vänsterpartiet.png" alt="" /><span class="party-name">Vänsterpartiet</span>
+                <span class="match-percent">50%</span><span class="match-pie" aria-hidden="true"><i>50%</i></span><span class="match-bar" aria-hidden="true"><i></i></span>
+              </button>
+              <button class="party-row" type="button" data-party="M" data-match="50" aria-label="Moderaterna, 50 procent">
+                <img class="agreement-party-logo" src="assets/parties/moderaterna.png" alt="" /><span class="party-name">Moderaterna</span>
+                <span class="match-percent">50%</span><span class="match-pie" aria-hidden="true"><i>50%</i></span><span class="match-bar" aria-hidden="true"><i></i></span>
+              </button>
+              <button class="party-row" type="button" data-party="KD" data-match="50" aria-label="Kristdemokraterna, 50 procent">
+                <img class="agreement-party-logo" src="assets/parties/kristdemokraterna.png" alt="" /><span class="party-name">Kristdemokraterna</span>
+                <span class="match-percent">50%</span><span class="match-pie" aria-hidden="true"><i>50%</i></span><span class="match-bar" aria-hidden="true"><i></i></span>
+              </button>
+              <button class="party-row" type="button" data-party="L" data-match="50" aria-label="Liberalerna, 50 procent">
+                <img class="agreement-party-logo" src="assets/parties/Liberalerna.png" alt="" /><span class="party-name">Liberalerna</span>
+                <span class="match-percent">50%</span><span class="match-pie" aria-hidden="true"><i>50%</i></span><span class="match-bar" aria-hidden="true"><i></i></span>
+              </button>
+              <button class="party-row" type="button" data-party="SD" data-match="50" aria-label="Sverigedemokraterna, 50 procent">
+                <img class="agreement-party-logo" src="assets/parties/sverigedemokraterna.png" alt="" /><span class="party-name">Sverigedemokraterna</span>
+                <span class="match-percent">50%</span><span class="match-pie" aria-hidden="true"><i>50%</i></span><span class="match-bar" aria-hidden="true"><i></i></span>
+              </button>
+            </div>
+            <button id="compareButton" class="rail-link" type="button">Se hela jämförelsen <span>→</span></button>
+          </div>
+        </aside>
+
+        <section id="how-it-works" class="info-section">
+          <div class="section-label">01 / Så fungerar det</div>
+          <div class="info-grid">
+            <div>
+              <h2>Mer än bara<br /><em>en åsikt.</em></h2>
+            </div>
+            <div class="info-copy">
+              <p>
+                Valkompanjonen hjälper dig att se vad som faktiskt skiljer olika politiska förslag åt.
+                Du får sammanhang, källor och flera perspektiv — utan att någon säger åt dig vad
+                du ska tycka.
+              </p>
+              <div class="principles">
+                <div><strong>01</strong><span>Fråga fritt</span></div>
+                <div><strong>02</strong><span>Jämför sakligt</span></div>
+                <div><strong>03</strong><span>Bestäm själv</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" class="quote-section">
+          <p class="kicker">Ett bättre samtal börjar här</p>
+          <blockquote>“Demokrati fungerar bäst när vi förstår varandra — även när vi inte håller med.”</blockquote>
+          <button id="aboutButtonSecondary" class="outline-button" type="button">Läs mer om Valkompanjonen <span>↗</span></button>
+        </section>
+        </div>
+
+        <section id="mindmapPage" class="mindmap-view" aria-labelledby="mindmapTitle" hidden>
+          <div class="my-map-workspace">
+            <header class="my-map-header">
+              <p class="my-map-brand">Valkompanjonen</p>
+              <h1>MIN KARTA</h1>
+              <div class="my-map-switch" role="group" aria-label="Välj kartvy">
+                <button id="myMapViewButton" type="button" aria-pressed="true">MIN KARTA</button>
+                <button id="myCompareViewButton" type="button" aria-pressed="false">JÄMFÖR</button>
+              </div>
+            </header>
+
+            <section id="myMapPersonalView" class="my-map-view" aria-label="Din politiska karta">
+              <div class="my-map-toolbar">
+                <span class="my-map-demo-label">Nya noder har samma storlek. Rangordna dem för att visa prioritet.</span>
+                <div class="my-map-toolbar-actions">
+                <button id="myMapSavedToggle" class="my-map-add-toggle" type="button" aria-expanded="false" aria-controls="myMapSavedPanel"><svg class="my-map-saved-icon" viewBox="0 0 44 36" aria-hidden="true" focusable="false"><path d="M31 13c0 8-7 14-16 14-2 0-4-.3-6-1l-7 3 4-7C3 20 1 17 1 13 1 6 8 1 16 1c4 0 8 1 11 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M33 5c-5-7-14 0-7 7l7 6 7-6c7-7-2-14-7-7Z" fill="currentColor"/></svg> Sparade chattar <span id="myMapSavedCount" class="my-map-saved-count" hidden></span></button>
+                <button id="myMapAddToggle" class="my-map-add-toggle" type="button" aria-expanded="false" aria-controls="myMapEditor">
+                  <span aria-hidden="true">+</span> Lägg till nod…
+                </button>
+                </div>
+              </div>
+              <div id="myMapPersonalLayout" class="my-map-layout">
+                <div class="my-map-stage">
+                  <svg id="myMapSvg" class="my-map-svg" viewBox="0 0 1000 700" role="img" aria-label="Interaktiv tankekarta över dina politiska prioriteringar"></svg>
+                </div>
+                  <aside id="myMapEditor" class="my-map-editor" aria-label="Lägg till och rangordna ämnen" hidden>
+                    <header class="my-map-editor-header">
+                      <button id="myMapEditorBack" class="my-map-editor-back" type="button" aria-label="Tillbaka till Lägg till noder" hidden>←</button>
+                      <h2 id="myMapEditorTitle">Lägg till noder</h2>
+                      <button id="myMapEditorClose" class="my-map-editor-close" type="button" aria-label="Stäng panelen">×</button>
+                    </header>
+                    <section id="myMapSubjectPicker" class="my-map-subject-picker" aria-labelledby="myMapSubjectHeading">
+                      <h3 id="myMapSubjectHeading">Föreslagna ämnen</h3>
+                      <div id="myMapSubjectChoices" class="my-map-subject-choices"></div>
+                    </section>
+                    <form id="myMapCustomForm" class="my-map-custom-form">
+                      <label class="sr-only" for="myMapCustomInput">Eget ämne</label>
+                      <input id="myMapCustomInput" type="text" maxlength="32" placeholder="Skriv din egen…" autocomplete="off">
+                      <button type="submit">Lägg till</button>
+                    </form>
+                    <p id="myMapEditorMessage" class="my-map-message" aria-live="polite"></p>
+                    <button id="myMapOpenRanking" class="my-map-open-ranking" type="button" aria-controls="myMapRanking" aria-expanded="false">Gör en rangordning</button>
+                    <section id="myMapRanking" class="my-map-ranking" aria-labelledby="myMapRankingHeading" hidden>
+                      <header>
+                        <h3 id="myMapRankingHeading">Rangordna dina noder</h3>
+                        <p>Dra eller välj Rangordna. Plats 1 får störst bubbla.</p>
+                      </header>
+                      <ol id="myMapRankingList" class="my-map-ranking-list" aria-label="Dina ämnen i prioritetsordning"></ol>
+                    </section>
+                  </aside>
+                  <aside id="myMapSavedPanel" class="my-map-saved-panel" aria-labelledby="myMapSavedTitle" hidden>
+                    <header class="my-map-editor-header"><h2 id="myMapSavedTitle">Sparade chattar</h2><button id="myMapSavedClose" class="my-map-editor-close" type="button" aria-label="Stäng sparade chattar">×</button></header>
+                    <div class="my-map-saved-scroll">
+                    <div id="myMapSavedExamples" class="my-map-saved-examples">
+                      <article class="mindmap-liked-entry my-map-saved-example" aria-labelledby="myMapSavedExampleTitle">
+                        <header class="mindmap-liked-entry-header"><strong id="myMapSavedExampleTitle">Skola</strong><span class="my-map-example-heart" aria-hidden="true">♥</span></header>
+                        <p>Här kan vi prata om undervisning, stöd och trygghet i skolan. Vilken fråga är viktigast för dig?</p>
+                      </article>
+                      <article class="mindmap-liked-entry my-map-saved-example" aria-label="Exempel om miljö">
+                        <header class="mindmap-liked-entry-header"><strong>Miljö</strong><span class="my-map-example-heart" aria-hidden="true">♥</span></header>
+                        <p>Vi kan utforska naturvård, rent vatten och hur miljön påverkas av våra val. Vad vill du veta mer om?</p>
+                      </article>
+                      <article class="mindmap-liked-entry my-map-saved-example" aria-label="Exempel om arbetsmarknad">
+                        <header class="mindmap-liked-entry-header"><strong>Arbetsmarknad</strong><span class="my-map-example-heart" aria-hidden="true">♥</span></header>
+                        <p>Vi kan prata om vägar till arbete, arbetsvillkor och möjligheter att byta yrke. Var vill du börja?</p>
+                      </article>
+                      <p class="my-map-saved-example-note">Illustrativa exempel på sparade svar.</p>
+                    </div>
+                    <div id="likedDebateList" class="mindmap-liked-list" aria-live="polite"></div>
+                    </div>
+                  </aside>
+              </div>
+            </section>
+
+            <section id="myMapCompareView" class="my-map-view my-map-compare-view" aria-label="Jämför politiska kartor" hidden>
+              <h2 class="my-map-compare-question">Vems politiska karta vill du jämföra din karta med?</h2>
+              <div id="myMapPartyChoices" class="my-map-party-choices" role="group" aria-label="Välj parti"></div>
+              <div class="my-map-comparison-summary">
+                <p id="myMapAgreement" class="my-map-agreement">Prioriteringsöverensstämmelse: <strong>Uppgift saknas</strong></p>
+                <p id="myMapAgreementCoverage" class="my-map-agreement-coverage">0 av 5 ämnen ingår – verifierat partiunderlag saknas.</p>
+                <p class="my-map-example-note">Detta är ett påhittat exempel för att visa hur jämförelsen fungerar. Det återger inte verifierade partiprioriteringar.</p>
+                <details class="my-map-comparison-method">
+                  <summary>Så räknas jämförelsen</summary>
+                  <p>Jämförelsen visar ämnesval och prioriteringar, inte politiska åsikter. Grönt och bock betyder samma rangplats, gult och ↕ olika rangplats, rött och plus/minus att ämnet bara finns i en karta. Ingen procentsats används.</p>
+                </details>
+              </div>
+              <p class="my-map-legend">Färger på partiets karta: Grönt: samma prioritet · Gult: olika prioritet · Rött: saknas i din karta.</p>
+              <div class="my-map-compare-grid">
+                <section class="my-map-compare-card" aria-labelledby="myMapOwnHeading">
+                  <h3 id="myMapOwnHeading">Din karta</h3>
+                  <div class="my-map-stage">
+                    <svg id="myMapCompareOwnSvg" class="my-map-svg" viewBox="0 0 1000 700" role="img" aria-label="Din politiska karta"></svg>
+                  </div>
+                </section>
+                <section class="my-map-compare-card" aria-labelledby="myMapPartyHeading">
+                  <h3 id="myMapPartyHeading">Partiets karta</h3>
+                  <div class="my-map-stage">
+                    <svg id="myMapComparePartySvg" class="my-map-svg" viewBox="0 0 1000 700" role="img" aria-label="Exempel på partiets politiska karta"></svg>
+                  </div>
+                </section>
+              </div>
+            </section>
+
+            <aside id="myMapInfo" class="my-map-info" aria-labelledby="myMapInfoTitle" aria-live="polite" hidden>
+              <header class="my-map-info-header">
+                <h2 id="myMapInfoTitle"></h2>
+                <button id="myMapInfoClose" type="button" aria-label="Stäng ämnesinformation">×</button>
+              </header>
+              <p id="myMapInfoParent"></p>
+              <button id="myMapInfoBack" class="my-map-info-back" type="button" hidden></button>
+              <p id="myMapInfoSummary" class="my-map-info-summary"></p>
+              <div class="my-map-info-sources">
+                <h3>Källor</h3>
+                <ul id="myMapInfoSources"></ul>
+              </div>
+              <div id="myMapInfoComparison" class="my-map-info-comparison" hidden></div>
+              <div class="my-map-info-actions">
+                <button id="myMapInfoAddTopic" type="button"></button>
+              </div>
+              <div class="my-map-info-subtopics">
+                <h3 id="myMapInfoSubtopicsHeading">Välj undernoder</h3>
+                <div id="myMapInfoSubtopics"></div>
+                <form id="myMapSubtopicForm" class="my-map-custom-form"><input id="myMapSubtopicInput" aria-label="Egen undernod" placeholder="Lägg till egen nod…" maxlength="70"><button type="submit">Lägg till</button></form>
+                <p id="myMapSubtopicMessage" aria-live="polite"></p>
+              </div>
+            </aside>
+
+            <div class="my-map-controls" role="group" aria-label="Kartkontroller">
+              <button id="myMapShowAll" type="button">Visa alla noder</button>
+              <span id="myMapZoomLabel" aria-live="polite">100 %</span>
+              <button id="myMapZoomIn" type="button" aria-label="Zooma in">+</button>
+              <button id="myMapZoomOut" type="button" aria-label="Zooma ut">−</button>
+            </div>
+            <p id="myMapStatus" class="sr-only" aria-live="polite"></p>
+          </div>
+
+          <header class="mindmap-header">
+            <div>
+              <p class="kicker">Utforska politiken</p>
+              <h1 id="mindmapTitle">Din politiska karta</h1>
+              <p class="mindmap-lead">Se samma politikområden från din egen eller de åtta riksdagspartiernas perspektiv.</p>
+            </div>
+          </header>
+
+          <div class="mindmap-page-layout">
+            <section class="mindmap-map-section" aria-labelledby="mapHeading">
+              <div class="map-comparison-grid">
+                <div class="map-panel personal-map-panel">
+              <div class="mindmap-section-heading">
+                <div>
+                  <p class="section-label">Ditt nätverk av idéer</p>
+                  <h2 id="mapHeading">Din karta</h2>
+                  <div class="map-ranking-actions">
+                    <button id="openRankingOnboarding" class="map-ranking-button" type="button">
+                      <span class="ranking-button-icon" aria-hidden="true">↕</span>
+                      <span>Rangordna din karta</span>
+                    </button>
+                    <button id="openSubcategoryRankingPersonal" class="outline-button subcategory-ranking-button" type="button">Rangordna underkategorier</button>
+                  </div>
+                </div>
+                <p class="map-instruction">Din prioritering. Dra för att panorera eller flytta noder; dubbelklicka för att zooma.</p>
+              </div>
+              <div class="map-personal-notice">
+              <strong>Din personliga karta</strong>
+              <span>Din rangordning och dina flyttade noder.</span>
+              </div>
+              <div class="map-stage">
+                <div id="mapCanvas" class="map-canvas" role="region" aria-label="Din politiska karta. Dubbelklicka på en nod för att zooma in." tabindex="0">
+                  <div id="mapSceneFrame" class="map-scene-frame">
+                    <div id="mapScene" class="map-scene">
+                      <svg class="map-connections" aria-hidden="true">
+                        <line data-from="start" data-connection="ekonomi"></line>
+                        <line data-from="start" data-connection="valfard"></line>
+                        <line data-from="start" data-connection="lag"></line>
+                        <line data-from="start" data-connection="migration"></line>
+                        <line data-from="start" data-connection="miljo"></line>
+                        <line data-from="start" data-connection="arbetsmarknad"></line>
+                        <line data-from="start" data-connection="forsvar"></line>
+                      </svg>
+                      <button class="map-node node-center is-selected" type="button" data-node="start" aria-pressed="true" aria-label="Din karta">
+                        <span id="mapCenterLabel">Din karta</span><small id="mapCenterCaption">startpunkt</small>
+                      </button>
+                      <button class="map-node node-ekonomi" type="button" data-node="ekonomi" aria-pressed="false"><span>Ekonomi</span></button>
+                      <button class="map-node node-valfard" type="button" data-node="valfard" aria-pressed="false"><span>Välfärd</span></button>
+                      <button class="map-node node-lag" type="button" data-node="lag" aria-pressed="false"><span>Lag & rätt</span></button>
+                      <button class="map-node node-migration" type="button" data-node="migration" aria-pressed="false"><span>Migration</span></button>
+                      <button class="map-node node-miljo" type="button" data-node="miljo" aria-pressed="false"><span>Miljö</span></button>
+                      <button class="map-node node-arbetsmarknad" type="button" data-node="arbetsmarknad" aria-pressed="false"><span>Arbetsmarknad</span></button>
+                      <button class="map-node node-forsvar" type="button" data-node="forsvar" aria-pressed="false"><span>Försvar</span></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="map-zoom-controls" role="group" aria-label="Zooma din karta">
+                  <button id="mapShowAll" type="button" aria-label="Visa alla noder i din karta" title="Visa alla noder">Visa alla noder</button>
+                  <button id="mapZoomIn" type="button" aria-label="Zooma in din karta" title="Zooma in">+</button>
+                  <span id="mapZoomLabel" aria-live="polite">70%</span>
+                  <button id="mapZoomOut" type="button" aria-label="Zooma ut din karta" title="Zooma ut">−</button>
+                </div>
+              </div>
+                </div>
+                <div class="map-panel party-map-panel">
+                  <div class="mindmap-section-heading">
+                    <div>
+                      <p class="section-label">Jämför med ett parti</p>
+                      <h2 id="partyMapHeading">Partikarta</h2>
+                      <div class="map-ranking-actions">
+                        <button id="openPartyRankingOnboarding" class="outline-button party-ranking-button" type="button">Rangordna partiets karta</button>
+                        <button id="openSubcategoryRankingParty" class="outline-button subcategory-ranking-button" type="button">Rangordna underkategorier</button>
+                      </div>
+                    </div>
+                    <p class="map-instruction">Välj parti ovan. Partiernas ståndpunkter är inte verifierade i prototypen.</p>
+                  </div>
+                  <div class="map-party-tabs" role="tablist" aria-label="Välj parti att jämföra">
+                <button id="mapTabSocialdemokraterna" class="map-party-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="partyMapCanvas" tabindex="0" data-map-party="Socialdemokraterna">
+                  <img src="assets/parties/socialdemokraterna.png" alt=""><span>Socialdemokraterna</span>
+                </button>
+                <button id="mapTabModeraterna" class="map-party-tab" type="button" role="tab" aria-selected="false" aria-controls="partyMapCanvas" tabindex="-1" data-map-party="Moderaterna">
+                  <img src="assets/parties/moderaterna.png" alt=""><span>Moderaterna</span>
+                </button>
+                <button id="mapTabSverigedemokraterna" class="map-party-tab" type="button" role="tab" aria-selected="false" aria-controls="partyMapCanvas" tabindex="-1" data-map-party="Sverigedemokraterna">
+                  <img src="assets/parties/sverigedemokraterna.png" alt=""><span>Sverigedemokraterna</span>
+                </button>
+                <button id="mapTabCenterpartiet" class="map-party-tab" type="button" role="tab" aria-selected="false" aria-controls="partyMapCanvas" tabindex="-1" data-map-party="Centerpartiet">
+                  <img src="assets/parties/centerpartiet.png" alt=""><span>Centerpartiet</span>
+                </button>
+                <button id="mapTabVansterpartiet" class="map-party-tab" type="button" role="tab" aria-selected="false" aria-controls="partyMapCanvas" tabindex="-1" data-map-party="Vänsterpartiet">
+                  <img src="assets/parties/vänsterpartiet.png" alt=""><span>Vänsterpartiet</span>
+                </button>
+                <button id="mapTabKristdemokraterna" class="map-party-tab" type="button" role="tab" aria-selected="false" aria-controls="partyMapCanvas" tabindex="-1" data-map-party="Kristdemokraterna">
+                  <img src="assets/parties/kristdemokraterna.png" alt=""><span>Kristdemokraterna</span>
+                </button>
+                <button id="mapTabLiberalerna" class="map-party-tab" type="button" role="tab" aria-selected="false" aria-controls="partyMapCanvas" tabindex="-1" data-map-party="Liberalerna">
+                  <img src="assets/parties/Liberalerna.png" alt=""><span>Liberalerna</span>
+                </button>
+                <button id="mapTabMiljopartiet" class="map-party-tab" type="button" role="tab" aria-selected="false" aria-controls="partyMapCanvas" tabindex="-1" data-map-party="Miljöpartiet">
+                  <img src="assets/parties/miljöpartiet.png" alt=""><span>Miljöpartiet</span>
+                </button>
+              </div>
+              <div class="map-stage">
+                <div id="partyMapCanvas" class="map-canvas" role="tabpanel" aria-labelledby="mapTabSocialdemokraterna" aria-label="Partikarta. Dubbelklicka på en nod för att zooma in." tabindex="0">
+                  <div id="partyMapSceneFrame" class="map-scene-frame">
+                    <div id="partyMapScene" class="map-scene"></div>
+                  </div>
+                </div>
+                <div class="map-zoom-controls" role="group" aria-label="Zooma partivyn">
+                  <button id="partyMapShowAll" type="button" aria-label="Visa alla noder i partivyn" title="Visa alla noder">Visa alla noder</button>
+                  <button id="partyMapZoomIn" type="button" aria-label="Zooma in partivyn" title="Zooma in">+</button>
+                  <span id="partyMapZoomLabel" aria-live="polite">70%</span>
+                  <button id="partyMapZoomOut" type="button" aria-label="Zooma ut partivyn" title="Zooma ut">−</button>
+                </div>
+              </div>
+                </div>
+              </div>
+
+            </section>
+
+            <aside class="node-details" aria-live="polite">
+              <p class="kicker">Vald kunskap</p>
+
+              <div class="selected-category-box">
+                <h2 id="nodeTitle">Din politiska karta</h2>
+                <p id="nodeDescription">Skapa din prioritering av viktiga politikområden från topp till botten.</p>
+                <div id="categoryBadges" class="category-badges" aria-live="polite"></div>
+              </div>
+
+              <details class="category-ranking category-ranking-details" aria-labelledby="rankingTitle">
+                <summary class="ranking-header">
+                  <h3 id="rankingTitle">Huvudkategorier</h3>
+                  <small>Visa / dölj</small>
+                </summary>
+                <div id="categoryList" class="category-list"></div>
+              </details>
+
+              <details class="category-ranking subcategory-ranking">
+                <summary class="ranking-header">
+                  <h3 id="subcategoryRankingTitle">Underkategorier</h3>
+                  <small>Visa / dölj</small>
+                </summary>
+                <div id="subcategoryList" class="category-list"></div>
+              </details>
+
+              <div class="source-card">
+                <span id="nodeSourceLabel">Senast sparad</span>
+                <strong id="nodeSource">Ekonomi & skatter</strong>
+                <small id="nodeSourceMeta">Skatter • Statsbudget • Företagande</small>
+              </div>
+              <section class="node-history" aria-labelledby="nodeHistoryTitle">
+                <h3 id="nodeHistoryTitle">Från tidigare samtal</h3>
+                <p id="nodeHistory">Använd listan för att rangordna de frågor som är viktigast för dig just nu.</p>
+              </section>
+              <section class="node-facts" aria-labelledby="nodeFactsTitle">
+                <h3 id="nodeFactsTitle">Fakta att ta med</h3>
+                <ul id="nodeFacts"></ul>
+              </section>
+              <section class="node-evidence" aria-labelledby="nodeEvidenceTitle">
+                <h3 id="nodeEvidenceTitle">Källor till denna nod</h3>
+                <ul id="nodeEvidence"></ul>
+                <button id="openNodeSources" class="node-sources-button" type="button">Öppna källistan <span>↗</span></button>
+              </section>
+              <form id="connectionForm" class="connection-form">
+                <label for="connectionInput">Lägg till en koppling</label>
+                <div>
+                  <input id="connectionInput" type="text" placeholder="Till exempel energi..." />
+                  <button type="submit" aria-label="Lägg till koppling">+</button>
+                </div>
+                <p id="connectionMessage" aria-live="polite"></p>
+              </form>
+            </aside>
+          </div>
+        </section>
+
+        <div id="rankingOnboarding" class="dialog-backdrop" hidden>
+          <section class="dialog ranking-onboarding-dialog" role="dialog" aria-modal="true" aria-labelledby="rankingOnboardingTitle" aria-describedby="rankingOnboardingDescription">
+            <button id="closeRankingOnboarding" class="close-button" type="button" aria-label="Stäng rangordning">×</button>
+            <p class="kicker">Kom igång</p>
+            <h2 id="rankingOnboardingTitle">Vad är viktigast för dig?</h2>
+            <p id="rankingOnboardingDescription">Flytta områdena så att det viktigaste hamnar högst. Din karta anpassas efter ordningen.</p>
+            <ol id="onboardingCategoryList" class="onboarding-category-list" aria-label="Rangordna politikområden"></ol>
+            <div class="ranking-onboarding-actions">
+              <button id="cancelRankingOnboarding" class="outline-button" type="button">Avbryt</button>
+              <button id="saveRankingOnboarding" class="primary-button" type="button">Spara rangordning</button>
+            </div>
+          </section>
+        </div>
+
+        <section id="partyView" class="party-view" aria-labelledby="partyTitle" hidden>
+          <div class="party-picker" id="partyPicker">
+            <header class="party-heading">
+              <h1 id="partyTitle">Prata med ett parti</h1>
+              <p>Välj det parti du vill skriva till.</p>
+            </header>
+            <div class="party-grid" role="group" aria-label="Välj ett parti">
+              <button class="party-option" type="button" data-party="Socialdemokraterna" aria-pressed="false"><img class="party-logo" src="assets/parties/socialdemokraterna.png" alt=""><span>Socialdemokraterna</span></button>
+              <button class="party-option" type="button" data-party="Moderaterna" aria-pressed="false"><img class="party-logo" src="assets/parties/moderaterna.png" alt=""><span>Moderaterna</span></button>
+              <button class="party-option" type="button" data-party="Sverigedemokraterna" aria-pressed="false"><img class="party-logo" src="assets/parties/sverigedemokraterna.png" alt=""><span>Sverigedemokraterna</span></button>
+              <button class="party-option" type="button" data-party="Centerpartiet" aria-pressed="false"><img class="party-logo" src="assets/parties/centerpartiet.png" alt=""><span>Centerpartiet</span></button>
+              <button class="party-option" type="button" data-party="Vänsterpartiet" aria-pressed="false"><img class="party-logo" src="assets/parties/vänsterpartiet.png" alt=""><span>Vänsterpartiet</span></button>
+              <button class="party-option" type="button" data-party="Kristdemokraterna" aria-pressed="false"><img class="party-logo" src="assets/parties/kristdemokraterna.png" alt=""><span>Kristdemokraterna</span></button>
+              <button class="party-option" type="button" data-party="Liberalerna" aria-pressed="false"><img class="party-logo" src="assets/parties/Liberalerna.png" alt=""><span>Liberalerna</span></button>
+              <button class="party-option" type="button" data-party="Miljöpartiet" aria-pressed="false"><img class="party-logo" src="assets/parties/miljöpartiet.png" alt=""><span>Miljöpartiet</span></button>
+            </div>
+          </div>
+          <section class="party-chat" id="partyChat" aria-labelledby="partyChatTitle" hidden>
+            <button class="party-back" id="partyBack" type="button"><span aria-hidden="true">←</span> Välj ett annat parti</button>
+            <div class="party-chat-brand">
+              <img id="partyChatLogo" src="" alt="">
+              <h2 id="partyChatTitle"></h2>
+            </div>
+            <div class="party-chat-log" id="partyChatLog" aria-live="polite" aria-label="Konversation med partiet"></div>
+            <div class="party-compose-row">
+            <div class="party-question-suggestions" role="group" aria-label="Frågeförslag till det valda partiet">
+              <button class="party-question-suggestion" type="button" data-party-question>Hur vill ni förbättra skolan?</button>
+              <button class="party-question-suggestion" type="button" data-party-question>Vad vill ni göra åt klimatförändringarna?</button>
+            </div>
+            <form class="party-chat-form" id="partyChatForm">
+              <label class="sr-only" for="partyChatInput">Skriv ditt meddelande</label>
+              <input id="partyChatInput" name="message" type="text" placeholder="Skriv ditt meddelande här …" autocomplete="off" required>
+              <span class="party-input-hint">Tryck Enter för att skicka</span>
+              <button class="party-send-button" type="submit" aria-label="Skicka meddelande" title="Skicka meddelande"><span aria-hidden="true">+</span></button>
+            </form>
+            </div>
+          </section>
+          <aside class="party-chat-navigation" id="partyChatNavigation" hidden>
+            <nav class="party-shortcuts" aria-labelledby="partyShortcutsTitle">
+              <h2 id="partyShortcutsTitle">Besök en annan valstuga</h2>
+              <ul id="partyShortcutList" class="party-shortcut-list"></ul>
+            </nav>
+          </aside>
+        </section>
+
+        <section id="debateView" class="debate-view" aria-labelledby="debateTitle" hidden>
+          <header class="debate-header">
+            <p class="kicker">Flera perspektiv</p>
+            <h1 id="debateTitle">Debatt</h1>
+            <p>Välj partier och ställ samma fråga till alla.</p>
+          </header>
+          <div class="debate-layout">
+            <section class="debate-chat" aria-label="Debattchatt">
+              <div class="debate-log" id="debateLog" aria-live="polite" aria-label="Debattkonversation">
+                <p class="debate-empty">Välj partier och fråga om exempelvis energi, skola eller klimat.</p>
+              </div>
+              <form class="debate-form" id="debateForm">
+                <label class="sr-only" for="debateInput">Skriv en fråga till debatten</label>
+                <input id="debateInput" name="question" type="text" autocomplete="off" placeholder="Skriv din fråga här...">
+                <button type="submit" aria-label="Skicka fråga">+</button>
+              </form>
+              <p class="debate-feedback" id="debateFeedback" aria-live="polite"></p>
+              <p class="debate-disclaimer">Sammanfattningar av partiernas publicerade politik, med källor.</p>
+            </section>
+            <aside class="debate-party-box" aria-labelledby="debatePartiesTitle">
+              <h2 id="debatePartiesTitle">Aktiva partier</h2>
+              <p>Välj vilka som ska delta i chatten.</p>
+              <div class="debate-party-list" id="debatePartyList">
+                <label class="debate-party-option"><input type="checkbox" value="Socialdemokraterna"><img src="assets/parties/socialdemokraterna.png" alt=""><span>Socialdemokraterna</span></label>
+                <label class="debate-party-option"><input type="checkbox" value="Moderaterna"><img src="assets/parties/moderaterna.png" alt=""><span>Moderaterna</span></label>
+                <label class="debate-party-option"><input type="checkbox" value="Sverigedemokraterna"><img src="assets/parties/sverigedemokraterna.png" alt=""><span>Sverigedemokraterna</span></label>
+                <label class="debate-party-option"><input type="checkbox" value="Centerpartiet"><img src="assets/parties/centerpartiet.png" alt=""><span>Centerpartiet</span></label>
+                <label class="debate-party-option"><input type="checkbox" value="Vänsterpartiet"><img src="assets/parties/vänsterpartiet.png" alt=""><span>Vänsterpartiet</span></label>
+                <label class="debate-party-option"><input type="checkbox" value="Kristdemokraterna"><img src="assets/parties/kristdemokraterna.png" alt=""><span>Kristdemokraterna</span></label>
+                <label class="debate-party-option"><input type="checkbox" value="Liberalerna"><img src="assets/parties/Liberalerna.png" alt=""><span>Liberalerna</span></label>
+                <label class="debate-party-option"><input type="checkbox" value="Miljöpartiet"><img src="assets/parties/miljöpartiet.png" alt=""><span>Miljöpartiet</span></label>
+              </div>
+              <p class="debate-party-count" id="debatePartyCount" aria-live="polite">0 av 8 partier valda</p>
+            </aside>
+          </div>
+        </section>
+
+      </main>
+      <footer class="footer">
+        <span>© 2025 VALKOMPANJONEN</span>
+        <span>Byggd för nyfikenhet och fria val.</span>
+      </footer>
+    </div>
+
+    <div id="aboutDialog" class="dialog-backdrop" hidden>
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+        <button id="closeDialog" class="close-button" type="button" aria-label="Stäng">×</button>
+        <p class="kicker">Om Valkompanjonen</p>
+        <h2 id="dialogTitle">Din röst börjar med en fråga.</h2>
+        <p>Valkompanjonen är ett neutralt verktyg för att utforska politik. Vi samlar perspektiv och källor så att du kan bilda dig en egen uppfattning.</p>
+      </div>
+    </div>
+
+    <div id="sourcesPanel" class="dialog-backdrop" hidden>
+      <section class="sources-dialog" role="dialog" aria-modal="true" aria-labelledby="sourcesTitle">
+        <button id="closeSources" class="close-button" type="button" aria-label="Stäng källor">×</button>
+        <p class="kicker">04 / Transparens</p>
+        <h2 id="sourcesTitle">Källor från dina samtal</h2>
+        <p class="sources-intro">Här sparas materialet som använts i dialogen, så att du kan kontrollera och läsa vidare när du vill.</p>
+        <div id="sourceList" class="source-list">
+          <div class="source-empty">Ställ en fråga för att bygga din källista.</div>
+        </div>
+      </section>
+    </div>
+
+    <script src="party-answers.js?v=20261015-prepared-answers-67"></script>
+    <script src="debate-answers.js?v=20261015-sourced-debate-74"></script>
+    <script src="script.js?v=20261015-party-shortcuts-right-77"></script>
+  </body>
+</html>
